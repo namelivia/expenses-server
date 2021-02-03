@@ -1,0 +1,2 @@
+fixes:
+  - "::app/"        # reduce root e.g., "path/" => "app/path/"

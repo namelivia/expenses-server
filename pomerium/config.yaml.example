@@ -1,0 +1,25 @@
+authenticate_service_url: https://authenticate.localhost.pomerium.io
+autocert: false
+certificates:
+  - cert: "/pomerium/cert.pem"
+    key: "/pomerium/privkey.pem"
+
+#Paste here the contents of scripts/get_signing_key
+signing_key: "YOUR_SIGNING_KEY"
+
+idp_provider: "YOUR_IDP_PROVIDER"
+cookie_secret: "YOUR_COOKIE_SECRET"
+idp_provider_url: "YOUR_IDP_PROVIDER_URL"
+idp_client_id: "YOUR_IDP_CLIENT_ID"
+idp_client_secret: "YOUR_IDP_CLIENT_SECRET"
+idp_service_account: "YOUR_IDP_SERVICE_ACCOUNT"
+
+# https://www.pomerium.io/configuration/#policy
+policy:
+  - from: https://plants.localhost.pomerium.io
+    to: http://plants-server-app:80
+    prefix: /api/
+    prefix_rewrite: /
+    pass_identity_headers: true
+    allowed_users:
+      - your-email@here.com

@@ -1,0 +1,71 @@
+version: '3'
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: expenses-server-app
+    restart: unless-stopped
+    depends_on:
+        - database
+    tty: true
+    working_dir: /app
+    expose:
+      - "80"
+    ports:
+      - "4444:4444"
+    volumes:
+      - ./:/app
+    environment:
+      DATABASE_URL: "postgresql://user:password@database/expenses"
+      TEST_DATABASE_URL: "sqlite:///./test.db"
+      NOTIFICATIONS_SERVICE_ENDPOINT: "http://notifications-service:80"
+      JWK_ENDPOINT: "https://authenticate.localhost.pomerium.io/.well-known/pomerium/jwks.json"
+    command: [
+        "pipenv",
+        "run",
+        "uvicorn",
+        "app.main:app",
+        "--reload",
+        "--host=0.0.0.0",
+        "--port=80"
+    ]
+    networks:
+      - app-network
+
+  #Postgres Service
+  database:
+    image: postgres:latest
+    container_name: expenses-server-database
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: expenses
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks:
+      - app-network
+
+  #Pomerium proxy
+  expenses-auth-proxy:
+    image: pomerium/pomerium:v0.11.0-rc1
+    container_name: expenses_proxy
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "443:443"
+    volumes:
+      - ./pomerium/config.yaml:/pomerium/config.yaml
+      - ./certs/localhost.crt:/pomerium/cert.pem:ro
+      - ./certs/localhost.key:/pomerium/privkey.pem:ro
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge

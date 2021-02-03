@@ -1,0 +1,39 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+mock = "*"
+pytest-cov = "*"
+pudb = "*"
+codecov = "*"
+black = "*"
+pre-commit = "*"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+python-multipart = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+requests = "*"
+alembic = "*"
+sqlalchemy-utils = "*"
+gunicorn = "*"
+uvloop = "*"
+httptools = "*"
+httpx = "*"
+pyjwt = {editable = true, ref = "master", git = "https://github.com/jpadilla/pyjwt.git"}
+cryptography = "*"
+fastapi-utils = "*"
+pytest-freezegun = "*"
+black = "*"
+install = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

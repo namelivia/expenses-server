@@ -1,0 +1,6 @@
+*.egg-info
+__pycache__/
+.coverage
+coverage.xml
+certs/
+pomerium/config.yaml
