@@ -11,4 +11,5 @@ class Expense(ExpensesBase):
     value = Column(Integer, nullable=False)
     user = Column(String)
     category = Column(String)
+    group = Column(String)
     date = Column(DateTime, nullable=False, server_default=func.now())

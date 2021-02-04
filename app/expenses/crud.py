@@ -4,6 +4,7 @@ import logging
 import datetime
 from . import models, schemas
 from app.notifications.notifications import Notifications
+from app.users.service import UserService
 
 logger = logging.getLogger(__name__)
 
@@ -13,14 +14,25 @@ def get_expense(db: Session, expense_id: int):
 
 
 # TODO: skip and limit
-def get_expenses(db: Session):
-    return db.query(models.Expense).all()
+# TODO: passing around the whole assertion is something I can avoid
+def get_expenses(db: Session, x_pomerium_jwt_assertion):
+    return (
+        db.query(models.Expense)
+        .filter(
+            models.Expense.group
+            == UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
+        )
+        .all()
+    )
 
 
-def create_expense(db: Session, expense: schemas.ExpenseCreate):
+def create_expense(
+    db: Session, expense: schemas.ExpenseCreate, x_pomerium_jwt_assertion
+):
     db_expense = models.Expense(
         **expense.dict(),
-        date=datetime.datetime.now()
+        date=datetime.datetime.now(),
+        group=UserService.get_current_user_group(db, x_pomerium_jwt_assertion),
     )
     db.add(db_expense)
     db.commit()
@@ -33,7 +45,9 @@ def create_expense(db: Session, expense: schemas.ExpenseCreate):
     return db_expense
 
 
-def update_expense(db: Session, expense_id: int, new_expense_data: schemas.ExpenseUpdate):
+def update_expense(
+    db: Session, expense_id: int, new_expense_data: schemas.ExpenseUpdate
+):
     expenses = db.query(models.Expense).filter(models.Expense.id == expense_id)
     expenses.update(new_expense_data, synchronize_session=False)
     db.commit()

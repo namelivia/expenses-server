@@ -20,6 +20,7 @@ class ExpenseUpdate(ExpenseBase):
 class Expense(ExpenseBase):
     id: int
     date: datetime.datetime = Field(title="Date for the expense")
+    group: str = Field(title="Group for the expense")
 
     class Config:
         orm_mode = True

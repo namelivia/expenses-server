@@ -1,9 +1,11 @@
+from fastapi import Depends
 from typing import Optional
-import jwt
-import os
-from jwt import PyJWKClient
 from fastapi import APIRouter, Header
+from sqlalchemy.orm import Session
+from app.dependencies import get_db
 import logging
+from . import crud
+from .jwt import JWT
 
 logger = logging.getLogger(__name__)
 
@@ -11,16 +13,15 @@ router = APIRouter(prefix="/users")
 
 
 @router.get("/me")
-async def get_current_user(x_pomerium_jwt_assertion: Optional[str] = Header(None)):
-    url = os.environ["JWK_ENDPOINT"]
-    jwks_client = PyJWKClient(url)
-    signing_key = jwks_client.get_signing_key_from_jwt(x_pomerium_jwt_assertion)
-    decoded = jwt.decode(
-        x_pomerium_jwt_assertion,
-        signing_key.key,
-        algorithms=["ES256"],
-        options={
-            "verify_aud": False,
+async def get_current_user(
+    db: Session = Depends(get_db),
+    x_pomerium_jwt_assertion: Optional[str] = Header(None),
+):
+    user_auth_data = JWT.get_current_user_info(x_pomerium_jwt_assertion)
+    user_data = crud.get_or_create_user_data(db, user_auth_data["sub"])
+    return {
+        **user_auth_data,
+        **{
+            "group": user_data.group,
         },
-    )
-    return decoded
+    }

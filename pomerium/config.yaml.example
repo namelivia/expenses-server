@@ -16,8 +16,8 @@ idp_service_account: "YOUR_IDP_SERVICE_ACCOUNT"
 
 # https://www.pomerium.io/configuration/#policy
 policy:
-  - from: https://plants.localhost.pomerium.io
-    to: http://plants-server-app:80
+  - from: https://expenses.localhost.pomerium.io
+    to: http://expenses-server-app:80
     prefix: /api/
     prefix_rewrite: /
     pass_identity_headers: true

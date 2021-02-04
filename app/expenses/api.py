@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Path, HTTPException, Depends, Response
+from fastapi import APIRouter, Path, HTTPException, Depends, Response, Header
+from typing import Optional
 from http import HTTPStatus
 from app.dependencies import get_db
 from . import crud, schemas
@@ -9,15 +10,22 @@ router = APIRouter(prefix="/expenses", dependencies=[Depends(get_db)])
 
 
 @router.get("", response_model=List[schemas.Expense])
-def expenses(db: Session = Depends(get_db), skip: int = 0, limit: int = 10):
-    expenses = crud.get_expenses(db)
+def expenses(
+    db: Session = Depends(get_db),
+    skip: int = 0,
+    limit: int = 10,
+    x_pomerium_jwt_assertion: Optional[str] = Header(None),
+):
+    expenses = crud.get_expenses(db, x_pomerium_jwt_assertion)
     return expenses
 
 
 def _get_expense(db: Session, expense_id: int):
     db_expense = crud.get_expense(db, expense_id=expense_id)
     if db_expense is None:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Expense not found")
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND, detail="Expense not found"
+        )
     return db_expense
 
 
@@ -30,8 +38,12 @@ def get_expense(
 
 
 @router.post("", response_model=schemas.Expense, status_code=HTTPStatus.CREATED)
-def create_expense(expense: schemas.ExpenseCreate, db: Session = Depends(get_db)):
-    return crud.create_expense(db, expense)
+def create_expense(
+    expense: schemas.ExpenseCreate,
+    db: Session = Depends(get_db),
+    x_pomerium_jwt_assertion: Optional[str] = Header(None),
+):
+    return crud.create_expense(db, expense, x_pomerium_jwt_assertion)
 
 
 @router.put("/{expense_id}", response_model=schemas.Expense, status_code=HTTPStatus.OK)

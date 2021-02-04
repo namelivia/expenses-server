@@ -20,6 +20,7 @@ class TestApp:
             "user": "some user",
             "category": "some category",
             "date": datetime.datetime.now(),
+            "group": "Test group",
         }
         data.update(expense)
         db_expense = Expense(**data)
@@ -28,7 +29,9 @@ class TestApp:
         return db_expense
 
     @patch("app.notifications.notifications.Notifications.send")
-    def test_create_expense(self, m_send_notification, client):
+    @patch("app.users.service.UserService.get_current_user_group")
+    def test_create_expense(self, m_get_user_group, m_send_notification, client):
+        m_get_user_group.return_value = "Test group"
         response = client.post(
             "/expenses",
             json={
@@ -46,6 +49,7 @@ class TestApp:
             "user": "some user",
             "category": "some category",
             "date": "2013-04-09T00:00:00",
+            "group": "Test group",
         }
         m_send_notification.assert_called_with(
             "A new expense called Test expense has been created"
@@ -55,8 +59,17 @@ class TestApp:
         response = client.get("/expenses/99")
         assert response.status_code == 404
 
-    @pytest.mark.skip(reason="no longer valid")
-    def test_get_current_user(self, client):
+    @patch("app.users.jwt.JWT.get_current_user_info")
+    def test_get_current_user(self, m_get_user_info, client):
+        m_get_user_info.return_value = {
+            "aud": ["example"],
+            "email": "user@example.com",
+            "exp": 1237658,
+            "iat": 1237658,
+            "iss": "test.example.com",
+            "nbf": 1237658,
+            "sub": "user",
+        }
         response = client.get("/users/me")
         assert response.status_code == 200
         assert response.json() == {
@@ -67,6 +80,7 @@ class TestApp:
             "iss": "test.example.com",
             "nbf": 1237658,
             "sub": "user",
+            "group": None,
         }
 
     def test_get_existing_expense(self, client, database_test_session):
@@ -80,13 +94,16 @@ class TestApp:
             "user": "some user",
             "category": "some category",
             "date": "2013-04-09T00:00:00",
+            "group": "Test group",
         }
 
     def test_create_expense_invalid(self, client):
         response = client.post("/expenses", json={"payload": "Invalid"})
         assert response.status_code == 422
 
-    def test_get_all_expenses(self, client, database_test_session):
+    @patch("app.users.service.UserService.get_current_user_group")
+    def test_get_all_expenses(self, m_get_user_group, client, database_test_session):
+        m_get_user_group.return_value = "Test group"
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
         response = client.get("/expenses")
@@ -99,6 +116,7 @@ class TestApp:
                 "user": "some user",
                 "category": "some category",
                 "date": "2013-04-09T00:00:00",
+                "group": "Test group",
             },
             {
                 "id": 2,
@@ -107,6 +125,7 @@ class TestApp:
                 "user": "some user",
                 "category": "some category",
                 "date": "2013-04-09T00:00:00",
+                "group": "Test group",
             },
         ]
 
@@ -140,4 +159,5 @@ class TestApp:
             "user": "some user",
             "category": "some category",
             "date": "2013-04-09T00:00:00",
+            "group": "Test group",
         }
