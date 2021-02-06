@@ -192,3 +192,23 @@ class TestApp:
                 "total": 200,
             },
         ]
+
+    @patch("app.users.service.UserService.get_current_user_group")
+    def test_get_users(self, m_get_user_group, client, database_test_session):
+        m_get_user_group.return_value = "Test group"
+        self._insert_test_user_data(database_test_session, {"user_id": "user_1"})
+        self._insert_test_user_data(database_test_session, {"user_id": "user_2"})
+        response = client.get("/users")
+        assert response.status_code == 200
+        assert response.json() == [
+            {
+                "id": 1,
+                "user_id": "user_1",
+                "group": "Test group",
+            },
+            {
+                "id": 2,
+                "user_id": "user_2",
+                "group": "Test group",
+            },
+        ]
