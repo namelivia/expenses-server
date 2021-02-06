@@ -6,6 +6,7 @@ from .test_base import (
     database_test_session,
 )
 from app.expenses.models import Expense
+from app.users.models import UserData
 from app.expenses.schemas import Expense as ExpenseSchema
 import datetime
 from freezegun import freeze_time
@@ -27,6 +28,17 @@ class TestApp:
         session.add(db_expense)
         session.commit()
         return db_expense
+
+    def _insert_test_user_data(self, session, user_data: dict = {}):
+        data = {
+            "user_id": "Test user",
+            "group": "Test group",
+        }
+        data.update(user_data)
+        db_user_data = UserData(**data)
+        session.add(db_user_data)
+        session.commit()
+        return db_user_data
 
     @patch("app.notifications.notifications.Notifications.send")
     @patch("app.users.service.UserService.get_current_user_group")
@@ -159,3 +171,24 @@ class TestApp:
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
         }
+
+    @patch("app.users.service.UserService.get_current_user_group")
+    def test_get_totals(self, m_get_user_group, client, database_test_session):
+        m_get_user_group.return_value = "Test group"
+        self._insert_test_user_data(database_test_session, {"user_id": "user_1"})
+        self._insert_test_user_data(database_test_session, {"user_id": "user_2"})
+        self._insert_test_expense(database_test_session, {"user": "user_1"})
+        self._insert_test_expense(database_test_session, {"user": "user_1"})
+        self._insert_test_expense(database_test_session, {"user": "user_2"})
+        response = client.get("/expenses/totals")
+        assert response.status_code == 200
+        assert response.json() == [
+            {
+                "user": "user_1",
+                "total": 400,
+            },
+            {
+                "user": "user_2",
+                "total": 200,
+            },
+        ]

@@ -29,6 +29,15 @@ def _get_expense(db: Session, expense_id: int):
     return db_expense
 
 
+@router.get("/totals", response_model=List[schemas.Total])
+def get_totals(
+    db: Session = Depends(get_db),
+    x_pomerium_jwt_assertion: Optional[str] = Header(None),
+):
+    totals = crud.get_totals(db, x_pomerium_jwt_assertion)
+    return totals
+
+
 @router.get("/{expense_id}", response_model=schemas.Expense)
 def get_expense(
     expense_id: int = Path(None, title="The ID of the expense to get", ge=1),

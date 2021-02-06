@@ -24,3 +24,8 @@ class Expense(ExpenseBase):
 
     class Config:
         orm_mode = True
+
+
+class Total(BaseModel):
+    user: str = Field(title="User from the group")
+    total: int = Field(title="Total amount paid")

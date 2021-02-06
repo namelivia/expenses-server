@@ -1,5 +1,6 @@
 # TODO: Maybe the filename crud is not that good since this is not CRUD anymore
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 import logging
 import datetime
 from . import models, schemas
@@ -66,3 +67,15 @@ def delete_expense(db: Session, expense: models.Expense):
     db.delete(expense)
     db.commit()
     logger.info("Expense deleted")
+
+
+def get_totals(db: Session, x_pomerium_jwt_assertion):
+    group = UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
+    users = UserService.get_all_users_from_group(db, group)
+    totals = (
+        db.query(models.Expense.user, func.sum(models.Expense.value))
+        .filter(models.Expense.user.in_([user.user_id for user in users]))
+        .group_by(models.Expense.user)
+        .all()
+    )
+    return [{"user": total[0], "total": total[1]} for total in totals]

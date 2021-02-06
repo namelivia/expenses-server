@@ -15,3 +15,7 @@ def get_or_create_user_data(db: Session, user_id: str):
         db.commit()
         db.refresh(db_user_data)
     return db_user_data
+
+
+def get_group_users(db: Session, group: str):
+    return db.query(models.UserData).filter(models.UserData.group == group).all()

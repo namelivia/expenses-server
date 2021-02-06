@@ -8,3 +8,7 @@ class UserService:
         user_auth_data = JWT.get_current_user_info(x_pomerium_jwt_assertion)
         user_data = crud.get_or_create_user_data(db, user_auth_data["sub"])
         return user_data.group
+
+    @staticmethod
+    def get_all_users_from_group(db, group):
+        return crud.get_group_users(db, group)
