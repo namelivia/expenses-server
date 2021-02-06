@@ -7,6 +7,7 @@ from .test_base import (
 )
 from app.expenses.models import Expense
 from app.users.models import UserData
+from app.categories.models import Category
 from app.expenses.schemas import Expense as ExpenseSchema
 import datetime
 from freezegun import freeze_time
@@ -40,6 +41,16 @@ class TestApp:
         session.add(db_user_data)
         session.commit()
         return db_user_data
+
+    def _insert_test_category(self, session, category: dict = {}):
+        data = {
+            "name": "Test category",
+        }
+        data.update(category)
+        db_category = Category(**data)
+        session.add(db_category)
+        session.commit()
+        return db_category
 
     @patch("app.notifications.notifications.Notifications.send")
     @patch("app.users.service.UserService.get_current_user_group")
@@ -213,5 +224,21 @@ class TestApp:
                 "user_id": "user_2",
                 "group": "Test group",
                 "name": "Test user name",
+            },
+        ]
+
+    def test_get_categories(self, client, database_test_session):
+        self._insert_test_category(database_test_session)
+        self._insert_test_category(database_test_session)
+        response = client.get("/categories")
+        assert response.status_code == 200
+        assert response.json() == [
+            {
+                "id": 1,
+                "name": "Test category",
+            },
+            {
+                "id": 2,
+                "name": "Test category",
             },
         ]

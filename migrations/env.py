@@ -8,6 +8,7 @@ from alembic import context
 
 from app.expenses.models import ExpensesBase
 from app.users.models import UserDataBase
+from app.categories.models import CategoriesBase
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,7 +23,11 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-target_metadata = [ExpensesBase.metadata, UserDataBase.metadata]
+target_metadata = [
+    ExpensesBase.metadata,
+    UserDataBase.metadata,
+    CategoriesBase.metadata,
+]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
