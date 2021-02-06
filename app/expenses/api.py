@@ -16,7 +16,7 @@ def expenses(
     limit: int = 10,
     x_pomerium_jwt_assertion: Optional[str] = Header(None),
 ):
-    expenses = crud.get_expenses(db, x_pomerium_jwt_assertion)
+    expenses = crud.get_expenses(db, x_pomerium_jwt_assertion, skip, limit)
     return expenses
 
 

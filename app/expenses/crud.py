@@ -16,13 +16,15 @@ def get_expense(db: Session, expense_id: int):
 
 # TODO: skip and limit
 # TODO: passing around the whole assertion is something I can avoid
-def get_expenses(db: Session, x_pomerium_jwt_assertion):
+def get_expenses(db: Session, x_pomerium_jwt_assertion, skip, limit):
     return (
         db.query(models.Expense)
         .filter(
             models.Expense.group
             == UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
         )
+        .offset(skip)
+        .limit(limit)
         .all()
     )
 
