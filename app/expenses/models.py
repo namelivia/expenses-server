@@ -10,6 +10,7 @@ class Expense(ExpensesBase):
     name = Column(String, nullable=False)
     value = Column(Integer, nullable=False)
     user = Column(String)
-    category = Column(String)
+    category_name = Column(String)
+    category_id = Column(Integer, nullable=True)
     group = Column(String)
     date = Column(DateTime, nullable=False, server_default=func.now())

@@ -20,7 +20,8 @@ class TestApp:
             "name": "Test expense",
             "value": 200,
             "user": "some user",
-            "category": "some category",
+            "category_name": "some category",
+            "category_id": 1,
             "date": datetime.datetime.now(),
             "group": "Test group",
         }
@@ -62,7 +63,8 @@ class TestApp:
                 "name": "Test expense",
                 "value": 200,
                 "user": "some user",
-                "category": "some category",
+                "category_name": "some category",
+                "category_id": 1,
             },
         )
         assert response.status_code == 201
@@ -71,7 +73,8 @@ class TestApp:
             "name": "Test expense",
             "value": 200,
             "user": "some user",
-            "category": "some category",
+            "category_name": "some category",
+            "category_id": 1,
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
         }
@@ -114,7 +117,8 @@ class TestApp:
             "name": "Test expense",
             "value": 200,
             "user": "some user",
-            "category": "some category",
+            "category_name": "some category",
+            "category_id": 1,
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
         }
@@ -136,7 +140,8 @@ class TestApp:
                 "name": "Test expense",
                 "value": 200,
                 "user": "some user",
-                "category": "some category",
+                "category_name": "some category",
+                "category_id": 1,
                 "date": "2013-04-09T00:00:00",
                 "group": "Test group",
             },
@@ -145,7 +150,8 @@ class TestApp:
                 "name": "Test expense",
                 "value": 200,
                 "user": "some user",
-                "category": "some category",
+                "category_name": "some category",
+                "category_id": 1,
                 "date": "2013-04-09T00:00:00",
                 "group": "Test group",
             },
@@ -170,7 +176,8 @@ class TestApp:
                 "name": "Updated name",
                 "value": 200,
                 "user": "some user",
-                "category": "some category",
+                "category_name": "some category",
+                "category_id": 1,
             },
         )
         assert response.status_code == 200
@@ -179,7 +186,8 @@ class TestApp:
             "name": "Updated name",
             "value": 200,
             "user": "some user",
-            "category": "some category",
+            "category_name": "some category",
+            "category_id": 1,
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
         }
@@ -242,3 +250,16 @@ class TestApp:
                 "name": "Test category",
             },
         ]
+
+    def test_create_category(self, client):
+        response = client.post(
+            "/categories",
+            json={
+                "name": "Test category",
+            },
+        )
+        assert response.status_code == 201
+        assert response.json() == {
+            "id": 1,
+            "name": "Test category",
+        }

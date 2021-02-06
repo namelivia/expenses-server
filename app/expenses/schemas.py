@@ -6,7 +6,8 @@ class ExpenseBase(BaseModel):
     name: str = Field(title="Name for the expense")
     value: int = Field(title="Amount of money spent")
     user: str = Field(title="User that paid for the expense")
-    category: str = Field(title="Category for the expense")
+    category_name: str = Field(title="Category for the expense")
+    category_id: int = Field(title="Category id for the expense")
 
 
 class ExpenseCreate(ExpenseBase):
