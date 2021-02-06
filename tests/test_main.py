@@ -33,6 +33,7 @@ class TestApp:
         data = {
             "user_id": "Test user",
             "group": "Test group",
+            "name": "Test user name",
         }
         data.update(user_data)
         db_user_data = UserData(**data)
@@ -205,10 +206,12 @@ class TestApp:
                 "id": 1,
                 "user_id": "user_1",
                 "group": "Test group",
+                "name": "Test user name",
             },
             {
                 "id": 2,
                 "user_id": "user_2",
                 "group": "Test group",
+                "name": "Test user name",
             },
         ]
