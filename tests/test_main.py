@@ -51,9 +51,7 @@ class TestApp:
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
         }
-        m_send_notification.assert_called_with(
-            "A new expense called Test expense has been created"
-        )
+        m_send_notification.assert_called_with("some user spent 200 on Test expense")
 
     def test_get_non_existing_expense(self, client):
         response = client.get("/expenses/99")

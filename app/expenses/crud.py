@@ -39,7 +39,9 @@ def create_expense(
     db.refresh(db_expense)
     logger.info("New expense created")
     try:
-        Notifications.send(f"A new expense called {db_expense.name} has been created")
+        Notifications.send(
+            f"{db_expense.user} spent {db_expense.value} on {db_expense.name}"
+        )
     except Exception as err:
         logger.error(f"Notification could not be sent: {str(err)}")
     return db_expense
