@@ -18,11 +18,10 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:a4de8d3525a95a96d59342e14b95cab5956c25b0907dce1549bb4e3e7958f4c2",
-                "sha256:c057488cc8ac7c4d06025ea3907e1a4dd07af70376fa149cf6bd2bc11b43076f"
+                "sha256:e871118b6174681f7e9a9ea67cfcae954c6d18e05b49c6b17f662d2530c76bf5"
             ],
             "index": "pypi",
-            "version": "==1.5.2"
+            "version": "==1.5.4"
         },
         "appdirs": {
             "hashes": [
@@ -70,6 +69,7 @@
                 "sha256:6bc25fc545a6b3d57b5f8618e59fc13d3a3a68431e8ca5fd4c13241cd70d0009",
                 "sha256:798caa2a2384b1cbe8a2a139d80734c9db54f9cc155c99d7cc92441a23871c03",
                 "sha256:7c6b1dece89874d9541fc974917b631406233ea0440d0bdfbb8e03bf39a49b3b",
+                "sha256:7ef7d4ced6b325e92eb4d3502946c78c5367bc416398d387b39591532536734e",
                 "sha256:840793c68105fe031f34d6a086eaea153a0cd5c491cde82a74b420edd0a2b909",
                 "sha256:8d6603078baf4e11edc4168a514c5ce5b3ba6e3e9c374298cb88437957960a53",
                 "sha256:9cc46bc107224ff5b6d04369e7c595acb700c3613ad7bcf2e2012f62ece80c35",
@@ -167,10 +167,10 @@
         },
         "httpcore": {
             "hashes": [
-                "sha256:420700af11db658c782f7e8fda34f9dcd95e3ee93944dd97d78cb70247e0cd06",
-                "sha256:dd1d762d4f7c2702149d06be2597c35fb154c5eff9789a8c5823fbcf4d2978d6"
+                "sha256:37ae835fb370049b2030c3290e12ed298bf1473c41bb72ca4aa78681eba9b7c9",
+                "sha256:93e822cd16c32016b414b789aeff4e855d0ccbfc51df563ee34d4dbadbb3bcdc"
             ],
-            "version": "==0.12.2"
+            "version": "==0.12.3"
         },
         "httptools": {
             "hashes": [
@@ -262,10 +262,10 @@
         },
         "packaging": {
             "hashes": [
-                "sha256:24e0da08660a87484d1602c30bb4902d74816b6985b93de36926f5bc95741858",
-                "sha256:78598185a7008a470d64526a8059de9aaa449238f280fc9eb6b13ba6c4109093"
+                "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5",
+                "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"
             ],
-            "version": "==20.8"
+            "version": "==20.9"
         },
         "pathspec": {
             "hashes": [
@@ -346,7 +346,7 @@
         "pyjwt": {
             "editable": true,
             "git": "https://github.com/jpadilla/pyjwt.git",
-            "ref": "3993ce1d3503b58cf74699a89ba9e5c18ef9b556"
+            "ref": "cda3ef147a6e7c12a63b761631b3f169a6827df0"
         },
         "pyparsing": {
             "hashes": [
@@ -780,10 +780,10 @@
         },
         "packaging": {
             "hashes": [
-                "sha256:24e0da08660a87484d1602c30bb4902d74816b6985b93de36926f5bc95741858",
-                "sha256:78598185a7008a470d64526a8059de9aaa449238f280fc9eb6b13ba6c4109093"
+                "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5",
+                "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"
             ],
-            "version": "==20.8"
+            "version": "==20.9"
         },
         "pathspec": {
             "hashes": [
@@ -1002,10 +1002,10 @@
         },
         "virtualenv": {
             "hashes": [
-                "sha256:219ee956e38b08e32d5639289aaa5bd190cfbe7dafcb8fa65407fca08e808f9c",
-                "sha256:227a8fed626f2f20a6cdb0870054989f82dd27b2560a911935ba905a2a5e0034"
+                "sha256:147b43894e51dd6bba882cf9c282447f780e2251cd35172403745fc381a0a80d",
+                "sha256:2be72df684b74df0ea47679a7df93fd0e04e72520022c57b479d8f881485dbe3"
             ],
-            "version": "==20.4.0"
+            "version": "==20.4.2"
         }
     }
 }
