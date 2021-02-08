@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
-from app.expenses.api import router as expenses
+from app.expenses.api import expenses_router, categories_router
 from app.users.api import router as users
-from app.categories.api import router as categories
 import logging
 import sys
 
@@ -26,8 +25,8 @@ app.add_middleware(
 [
     app.include_router(router)
     for router in [
-        expenses,
+        expenses_router,
         users,
-        categories,
+        categories_router,
     ]
 ]

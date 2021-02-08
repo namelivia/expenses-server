@@ -81,3 +81,15 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
         .all()
     )
     return [{"user": total[0], "total": total[1]} for total in totals]
+
+
+def get_categories(db: Session):
+    return db.query(models.Category).all()
+
+
+def create_category(db: Session, category: schemas.CategoryCreate):
+    db_category = models.Category(**category.dict())
+    db.add(db_category)
+    db.commit()
+    db.refresh(db_category)
+    return db_category

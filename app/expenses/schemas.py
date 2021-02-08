@@ -30,3 +30,18 @@ class Expense(ExpenseBase):
 class Total(BaseModel):
     user: str = Field(title="User from the group")
     total: int = Field(title="Total amount paid")
+
+
+class CategoryBase(BaseModel):
+    name: str = Field(title="Name for the category")
+
+
+class CategoryCreate(CategoryBase):
+    pass
+
+
+class Category(CategoryBase):
+    id: int
+
+    class Config:
+        orm_mode = True

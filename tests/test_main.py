@@ -5,9 +5,8 @@ from .test_base import (
     create_test_database,
     database_test_session,
 )
-from app.expenses.models import Expense
+from app.expenses.models import Expense, Category
 from app.users.models import UserData
-from app.categories.models import Category
 from app.expenses.schemas import Expense as ExpenseSchema
 import datetime
 from freezegun import freeze_time

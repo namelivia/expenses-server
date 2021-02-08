@@ -6,10 +6,10 @@ from . import crud, schemas
 from typing import List
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/expenses", dependencies=[Depends(get_db)])
+expenses_router = APIRouter(prefix="/expenses", dependencies=[Depends(get_db)])
 
 
-@router.get("", response_model=List[schemas.Expense])
+@expenses_router.get("", response_model=List[schemas.Expense])
 def expenses(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -29,7 +29,7 @@ def _get_expense(db: Session, expense_id: int):
     return db_expense
 
 
-@router.get("/totals", response_model=List[schemas.Total])
+@expenses_router.get("/totals", response_model=List[schemas.Total])
 def get_totals(
     db: Session = Depends(get_db),
     x_pomerium_jwt_assertion: Optional[str] = Header(None),
@@ -38,7 +38,7 @@ def get_totals(
     return totals
 
 
-@router.get("/{expense_id}", response_model=schemas.Expense)
+@expenses_router.get("/{expense_id}", response_model=schemas.Expense)
 def get_expense(
     expense_id: int = Path(None, title="The ID of the expense to get", ge=1),
     db: Session = Depends(get_db),
@@ -46,7 +46,9 @@ def get_expense(
     return _get_expense(db, expense_id)
 
 
-@router.post("", response_model=schemas.Expense, status_code=HTTPStatus.CREATED)
+@expenses_router.post(
+    "", response_model=schemas.Expense, status_code=HTTPStatus.CREATED
+)
 def create_expense(
     expense: schemas.ExpenseCreate,
     db: Session = Depends(get_db),
@@ -55,7 +57,9 @@ def create_expense(
     return crud.create_expense(db, expense, x_pomerium_jwt_assertion)
 
 
-@router.put("/{expense_id}", response_model=schemas.Expense, status_code=HTTPStatus.OK)
+@expenses_router.put(
+    "/{expense_id}", response_model=schemas.Expense, status_code=HTTPStatus.OK
+)
 def update_expense(
     new_expense_data: schemas.ExpenseUpdate,
     db: Session = Depends(get_db),
@@ -64,10 +68,29 @@ def update_expense(
     return crud.update_expense(db, expense_id, new_expense_data)
 
 
-@router.delete("/{expense_id}")
+@expenses_router.delete("/{expense_id}")
 async def delete_expense(
     expense_id: int = Path(None, title="The ID of the expense to remove", ge=1),
     db: Session = Depends(get_db),
 ):
     crud.delete_expense(db, _get_expense(db, expense_id))
     return Response(status_code=HTTPStatus.NO_CONTENT)
+
+
+categories_router = APIRouter(prefix="/categories", dependencies=[Depends(get_db)])
+
+
+@categories_router.get("", response_model=List[schemas.Category])
+def categories(db: Session = Depends(get_db)):
+    categories = crud.get_categories(db)
+    return categories
+
+
+@categories_router.post(
+    "", response_model=schemas.Category, status_code=HTTPStatus.CREATED
+)
+def create_category(
+    category: schemas.CategoryCreate,
+    db: Session = Depends(get_db),
+):
+    return crud.create_category(db, category)
