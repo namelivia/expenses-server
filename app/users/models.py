@@ -1,10 +1,8 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-UserDataBase = declarative_base()
+from app.database import Base
 
 
-class UserData(UserDataBase):
+class UserData(Base):
     __tablename__ = "user_data"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(String, nullable=False)
