@@ -1,10 +1,8 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-CategoriesBase = declarative_base()
+from app.database import Base
 
 
-class Category(CategoriesBase):
+class Category(Base):
     __tablename__ = "categories"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)

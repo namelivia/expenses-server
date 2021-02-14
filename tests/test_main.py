@@ -5,8 +5,9 @@ from .test_base import (
     create_test_database,
     database_test_session,
 )
-from app.expenses.models import Expense, Category
+from app.expenses.models import Expense
 from app.users.models import UserData
+from app.categories.models import Category
 from app.expenses.schemas import Expense as ExpenseSchema
 import datetime
 from freezegun import freeze_time
@@ -15,11 +16,11 @@ from freezegun import freeze_time
 @freeze_time("2013-04-09")
 class TestApp:
     def _insert_test_expense(self, session, expense: dict = {}):
-        self._insert_test_category(session)
         data = {
             "name": "Test expense",
             "value": 200,
             "user": "some user",
+            "category_name": "some category",
             "category_id": 1,
             "date": datetime.datetime.now(),
             "group": "Test group",
@@ -54,17 +55,15 @@ class TestApp:
 
     @patch("app.notifications.notifications.Notifications.send")
     @patch("app.users.service.UserService.get_current_user_group")
-    def test_create_expense(
-        self, m_get_user_group, m_send_notification, client, database_test_session
-    ):
+    def test_create_expense(self, m_get_user_group, m_send_notification, client):
         m_get_user_group.return_value = "Test group"
-        self._insert_test_category(database_test_session)
         response = client.post(
             "/expenses",
             json={
                 "name": "Test expense",
                 "value": 200,
                 "user": "some user",
+                "category_name": "some category",
                 "category_id": 1,
             },
         )
@@ -74,10 +73,10 @@ class TestApp:
             "name": "Test expense",
             "value": 200,
             "user": "some user",
+            "category_name": "some category",
             "category_id": 1,
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
-            "category": {"id": 1, "name": "Test category"},
         }
         m_send_notification.assert_called_with("some user spent 200 on Test expense")
 
@@ -118,10 +117,10 @@ class TestApp:
             "name": "Test expense",
             "value": 200,
             "user": "some user",
+            "category_name": "some category",
             "category_id": 1,
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
-            "category": {"id": 1, "name": "Test category"},
         }
 
     def test_create_expense_invalid(self, client):
@@ -141,20 +140,20 @@ class TestApp:
                 "name": "Test expense",
                 "value": 200,
                 "user": "some user",
+                "category_name": "some category",
                 "category_id": 1,
                 "date": "2013-04-09T00:00:00",
                 "group": "Test group",
-                "category": {"id": 1, "name": "Test category"},
             },
             {
                 "id": 2,
                 "name": "Test expense",
                 "value": 200,
                 "user": "some user",
+                "category_name": "some category",
                 "category_id": 1,
                 "date": "2013-04-09T00:00:00",
                 "group": "Test group",
-                "category": {"id": 1, "name": "Test category"},
             },
         ]
 
@@ -177,6 +176,7 @@ class TestApp:
                 "name": "Updated name",
                 "value": 200,
                 "user": "some user",
+                "category_name": "some category",
                 "category_id": 1,
             },
         )
@@ -186,10 +186,10 @@ class TestApp:
             "name": "Updated name",
             "value": 200,
             "user": "some user",
+            "category_name": "some category",
             "category_id": 1,
             "date": "2013-04-09T00:00:00",
             "group": "Test group",
-            "category": {"id": 1, "name": "Test category"},
         }
 
     @patch("app.users.service.UserService.get_current_user_group")
