@@ -7,4 +7,3 @@ class UserData(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(String, nullable=False)
     group = Column(String, nullable=True)
-    name = Column(String, nullable=True)

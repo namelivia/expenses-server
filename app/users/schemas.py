@@ -5,7 +5,6 @@ class UserData(BaseModel):
     id: int
     user_id: str = Field(title="User id on the identity provider")
     group: str = Field(title="Group for the user")
-    name: str = Field(title="Name for the user")
 
     class Config:
         orm_mode = True
