@@ -17,11 +17,13 @@ class TestServices:
         )
 
     @patch("app.users.jwt.JWT.get_current_user_info")
-    def test_getting_current_user_group(self, m_get_user_info, database_test_session):
+    def test_getting_current_user_group(
+        self, m_get_current_user_info, database_test_session
+    ):
         db_user_data = UserData(group="Test Group", user_id="user")
         database_test_session.add(db_user_data)
         database_test_session.commit()
-        m_get_user_info.return_value = {
+        m_get_current_user_info.return_value = {
             "aud": ["example"],
             "email": "user@example.com",
             "exp": 1237658,
