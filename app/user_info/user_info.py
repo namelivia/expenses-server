@@ -12,4 +12,5 @@ class UserInfo:
         response = requests.get(
             url=os.getenv("USER_INFO_SERVICE_ENDPOINT") + f"/{user_id}"
         )
-        logger.info(response.text)
+        response.raise_for_status()
+        return response.text
