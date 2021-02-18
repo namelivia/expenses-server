@@ -1,13 +1,19 @@
-from .jwt import JWT
 from . import crud
+from app.user_info.user_info import UserInfo
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class UserService:
     @staticmethod
     def get_current_user_group(db, x_pomerium_jwt_assertion):
-        user_auth_data = JWT.get_current_user_info(x_pomerium_jwt_assertion)
-        user_data = crud.get_or_create_user_data(db, user_auth_data["sub"])
-        return user_data.group
+        try:
+            user_info = UserInfo.get(x_pomerium_jwt_assertion)
+            user_data = crud.get_or_create_user_data(db, user_info["sub"])
+            return user_data.group
+        except Exception as err:
+            logger.error(f"User info could not be retrieved: {str(err)}")
 
     @staticmethod
     def get_all_users_from_group(db, group):

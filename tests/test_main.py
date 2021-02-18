@@ -88,10 +88,9 @@ class TestApp:
         response = client.get("/expenses/99")
         assert response.status_code == 404
 
-    @patch("app.users.jwt.JWT.get_current_user_info")
     @patch("app.users.api.UserInfo.get")
-    def test_get_current_user(self, m_get_user_info, m_get_current_user_info, client):
-        m_get_current_user_info.return_value = {
+    def test_get_current_user(self, m_get_user_info, client):
+        m_get_user_info.return_value = {
             "aud": ["example"],
             "email": "user@example.com",
             "exp": 1237658,
@@ -99,9 +98,11 @@ class TestApp:
             "iss": "test.example.com",
             "nbf": 1237658,
             "sub": "user",
+            "name": "User Name",
         }
-        m_get_user_info.return_value = {"name": "User Name"}
-        response = client.get("/users/me")
+        response = client.get(
+            "/users/me", headers={"X-Pomerium-Jwt-Assertion": "jwt_assertion"}
+        )
         assert response.status_code == 200
         assert response.json() == {
             "aud": ["example"],
@@ -114,7 +115,7 @@ class TestApp:
             "group": None,
             "name": "User Name",
         }
-        m_get_user_info.assert_called_with("user")
+        m_get_user_info.assert_called_with("jwt_assertion")
 
     def test_get_existing_expense(self, client, database_test_session):
         self._insert_test_expense(database_test_session)
