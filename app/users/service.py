@@ -23,6 +23,6 @@ class UserService:
     def get_current_user_name(db, x_pomerium_jwt_assertion):
         try:
             user_info = UserInfo.get(x_pomerium_jwt_assertion)
-            return user_info.name
+            return user_info["name"]
         except Exception as err:
             logger.error(f"User info could not be retrieved: {str(err)}")
