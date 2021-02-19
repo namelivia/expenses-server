@@ -23,7 +23,6 @@ services:
       TEST_DATABASE_URL: "sqlite:///./test.db"
       NOTIFICATIONS_SERVICE_ENDPOINT: "http://notifications-service:80"
       USER_INFO_SERVICE_ENDPOINT: "http://user-info-service:80"
-      JWK_ENDPOINT: "https://authenticate.localhost.pomerium.io/.well-known/pomerium/jwks.json"
     command: [
         "pipenv",
         "run",

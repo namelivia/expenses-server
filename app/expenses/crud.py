@@ -36,6 +36,7 @@ def create_expense(
         **expense.dict(),
         date=datetime.datetime.now(),
         group=UserService.get_current_user_group(db, x_pomerium_jwt_assertion),
+        user_name=UserService.get_current_user_name(db, x_pomerium_jwt_assertion),
     )
     db.add(db_expense)
     db.commit()
@@ -43,7 +44,7 @@ def create_expense(
     logger.info("New expense created")
     try:
         Notifications.send(
-            f"{db_expense.user} spent {db_expense.value} on {db_expense.name}"
+            f"{db_expense.user_name} spent {db_expense.value} on {db_expense.name}"
         )
     except Exception as err:
         logger.error(f"Notification could not be sent: {str(err)}")
@@ -75,9 +76,9 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
     group = UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
     users = UserService.get_all_users_from_group(db, group)
     totals = (
-        db.query(models.Expense.user, func.sum(models.Expense.value))
-        .filter(models.Expense.user.in_([user.user_id for user in users]))
-        .group_by(models.Expense.user)
+        db.query(models.Expense.user_id, func.sum(models.Expense.value))
+        .filter(models.Expense.user_id.in_([user.user_id for user in users]))
+        .group_by(models.Expense.user_id)
         .all()
     )
     return [{"user": total[0], "total": total[1]} for total in totals]
