@@ -19,7 +19,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      DATABASE_URL: "postgresql://user:password@database/expenses"
+      DATABASE_URL: "postgresql://user:password@expenses-server-database/expenses"
       TEST_DATABASE_URL: "sqlite:///./test.db"
       NOTIFICATIONS_SERVICE_ENDPOINT: "http://notifications-service:80"
       USER_INFO_SERVICE_ENDPOINT: "http://user-info-service:80"
