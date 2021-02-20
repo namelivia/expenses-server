@@ -1,13 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine, Base
 from app.expenses.api import router as expenses
 from app.users.api import router as users
 from app.categories.api import router as categories
 import logging
 import sys
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

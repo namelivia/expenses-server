@@ -32,8 +32,6 @@ services:
         "--host=0.0.0.0",
         "--port=80"
     ]
-    networks:
-      - app-network
 
   #Postgres Service
   database:
@@ -41,14 +39,12 @@ services:
     container_name: expenses-server-database
     restart: unless-stopped
     tty: true
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     environment:
       POSTGRES_DB: expenses
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    networks:
-      - app-network
 
   #Pomerium proxy
   expenses-auth-proxy:
@@ -62,10 +58,9 @@ services:
       - ./pomerium/config.yaml:/pomerium/config.yaml
       - ./certs/localhost.crt:/pomerium/cert.pem:ro
       - ./certs/localhost.key:/pomerium/privkey.pem:ro
-    networks:
-      - app-network
 
 #Docker Networks
 networks:
-  app-network:
-    driver: bridge
+  default:
+    external:
+      name: local-development-network
