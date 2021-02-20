@@ -1,0 +1,11 @@
+--Insert test categories
+INSERT INTO categories (id, name) VALUES (1, 'Test Category 1');
+INSERT INTO categories (id, name) VALUES (2, 'Test Category 2');
+
+--Insert test user data
+INSERT INTO user_data (id, user_id, "group") VALUES (1, 'localhost/testuser', 'Test group');
+
+--Insert some test expenses
+INSERT INTO expenses (id, name, value, category_id, "group", date, user_id, user_name) VALUES (1, 'Test expense 1', 120, 1, 'Test group', CURRENT_TIMESTAMP, 'localhost/testuser', 'Test user');
+INSERT INTO expenses (id, name, value, category_id, "group", date, user_id, user_name) VALUES (2, 'Test expense 2', 240, 2, 'Test group', CURRENT_TIMESTAMP, 'localhost/testuser', 'Test user');
+INSERT INTO expenses (id, name, value, category_id, "group", date, user_id, user_name) VALUES (3, 'Test expense 3', 40, 1, 'Test group', CURRENT_TIMESTAMP, 'localhost/testuser', 'Test user');

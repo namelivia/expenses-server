@@ -1,0 +1,1 @@
+cat ./seed/depopulate.sql | docker exec -i expenses-server-database psql -U user expenses
