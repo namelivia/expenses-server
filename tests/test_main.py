@@ -227,8 +227,12 @@ class TestApp:
         }
 
     @patch("app.users.service.UserService.get_current_user_group")
-    def test_get_totals(self, m_get_user_group, client, database_test_session):
+    @patch("app.users.api.UserInfo.get")
+    def test_get_totals(
+        self, m_get_user_info, m_get_user_group, client, database_test_session
+    ):
         m_get_user_group.return_value = "Test group"
+        m_get_user_info.return_value = {"name": "Test user"}
         self._insert_test_user_data(database_test_session, {"user_id": "user_1"})
         self._insert_test_user_data(database_test_session, {"user_id": "user_2"})
         self._insert_test_expense(database_test_session, {"user_id": "user_1"})
@@ -238,14 +242,15 @@ class TestApp:
         assert response.status_code == 200
         assert response.json() == [
             {
-                "user": "user_1",
+                "user": "Test user",
                 "total": 400,
             },
             {
-                "user": "user_2",
+                "user": "Test user",
                 "total": 200,
             },
         ]
+        m_get_user_info.assert_has_calls([call("user_1"), call("user_2")])
 
     @patch("app.users.service.UserService.get_current_user_group")
     @patch("app.users.api.UserInfo.get")

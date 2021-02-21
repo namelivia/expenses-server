@@ -6,6 +6,7 @@ import datetime
 from . import models, schemas
 from app.notifications.notifications import Notifications
 from app.users.service import UserService
+from app.user_info.user_info import UserInfo
 
 logger = logging.getLogger(__name__)
 
@@ -82,4 +83,6 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
         .group_by(models.Expense.user_id)
         .all()
     )
-    return [{"user": total[0], "total": total[1]} for total in totals]
+    return [
+        {"user": UserInfo.get(total[0])["name"], "total": total[1]} for total in totals
+    ]
