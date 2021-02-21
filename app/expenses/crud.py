@@ -23,6 +23,7 @@ def get_expenses(db: Session, x_pomerium_jwt_assertion, skip, limit):
             models.Expense.group
             == UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
         )
+        .order_by(models.Expense.date.desc())
         .offset(skip)
         .limit(limit)
         .all()
