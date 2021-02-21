@@ -16,7 +16,7 @@ class TestServices:
             json={"message": "Test message"},
         )
 
-    @patch("app.users.service.UserInfo.get")
+    @patch("app.users.service.UserInfo.get_current")
     def test_getting_current_user_group(self, m_get_user_info, database_test_session):
         db_user_data = UserData(group="Test Group", user_id="user")
         database_test_session.add(db_user_data)

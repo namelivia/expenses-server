@@ -1,5 +1,5 @@
 import pytest
-from mock import patch, Mock
+from mock import patch, Mock, call
 from .test_base import (
     client,
     create_test_database,
@@ -97,7 +97,7 @@ class TestApp:
         response = client.get("/expenses/99")
         assert response.status_code == 404
 
-    @patch("app.users.api.UserInfo.get")
+    @patch("app.users.api.UserInfo.get_current")
     def test_get_current_user(self, m_get_user_info, client):
         m_get_user_info.return_value = {
             "aud": ["example"],
@@ -248,8 +248,12 @@ class TestApp:
         ]
 
     @patch("app.users.service.UserService.get_current_user_group")
-    def test_get_users(self, m_get_user_group, client, database_test_session):
+    @patch("app.users.api.UserInfo.get")
+    def test_get_users(
+        self, m_get_user_info, m_get_user_group, client, database_test_session
+    ):
         m_get_user_group.return_value = "Test group"
+        m_get_user_info.return_value = {"name": "Test user"}
         self._insert_test_user_data(database_test_session, {"user_id": "user_1"})
         self._insert_test_user_data(database_test_session, {"user_id": "user_2"})
         response = client.get("/users")
@@ -259,13 +263,16 @@ class TestApp:
                 "id": 1,
                 "user_id": "user_1",
                 "group": "Test group",
+                "name": "Test user",
             },
             {
                 "id": 2,
                 "user_id": "user_2",
                 "group": "Test group",
+                "name": "Test user",
             },
         ]
+        m_get_user_info.assert_has_calls([call("user_1"), call("user_2")])
 
     def test_get_categories(self, client, database_test_session):
         self._insert_test_category(database_test_session)

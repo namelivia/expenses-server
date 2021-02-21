@@ -21,7 +21,7 @@ def get_users(
 ):
     group = UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
     users = crud.get_group_users(db, group)
-    return users
+    return [{**user.__dict__, **UserInfo.get(user.user_id)} for user in users]
 
 
 @router.get("/me")
@@ -30,7 +30,7 @@ async def get_current_user(
     x_pomerium_jwt_assertion: Optional[str] = Header(None),
 ):
     try:
-        user_info = UserInfo.get(x_pomerium_jwt_assertion)
+        user_info = UserInfo.get_current(x_pomerium_jwt_assertion)
         user_data = crud.get_or_create_user_data(db, user_info["sub"])
         return {
             **user_info,
