@@ -38,6 +38,7 @@ def create_expense(
         **expense.dict(),
         date=datetime.datetime.now(),
         group=UserService.get_current_user_group(db, x_pomerium_jwt_assertion),
+        # TODO: This is wrong, the user may be another one
         user_name=UserService.get_current_user_name(db, x_pomerium_jwt_assertion),
     )
     db.add(db_expense)
