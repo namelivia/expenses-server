@@ -55,17 +55,17 @@ class TestApp:
 
     @patch("app.notifications.notifications.Notifications.send")
     @patch("app.users.service.UserService.get_current_user_group")
-    @patch("app.users.service.UserService.get_current_user_name")
+    @patch("app.users.service.UserInfo.get")
     def test_create_expense(
         self,
-        m_get_user_name,
+        m_get_user_info,
         m_get_user_group,
         m_send_notification,
         client,
         database_test_session,
     ):
         m_get_user_group.return_value = "Test group"
-        m_get_user_name.return_value = "Test user"
+        m_get_user_info.return_value = {"name": "Test user"}
         self._insert_test_category(database_test_session)
         response = client.post(
             "/expenses",
