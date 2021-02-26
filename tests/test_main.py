@@ -91,7 +91,7 @@ class TestApp:
                 "name": "Test category",
             },
         }
-        m_send_notification.assert_called_with("Test user spent 200 on Test expense")
+        m_send_notification.assert_called_with("Test user spent 2.00 on Test expense")
 
     def test_get_non_existing_expense(self, client):
         response = client.get("/expenses/99")

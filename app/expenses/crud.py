@@ -46,7 +46,7 @@ def create_expense(
     logger.info("New expense created")
     try:
         Notifications.send(
-            f"{db_expense.user_name} spent {db_expense.value} on {db_expense.name}"
+            f"{db_expense.user_name} spent {(db_expense.value/100):.2f} on {db_expense.name}"
         )
     except Exception as err:
         logger.error(f"Notification could not be sent: {str(err)}")
