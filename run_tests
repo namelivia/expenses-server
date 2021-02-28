@@ -1,2 +1,2 @@
 #!/bin/bash
-docker exec expenses-server-app pipenv run pytest
+docker exec -it expenses-server-app pipenv run pytest
