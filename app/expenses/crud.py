@@ -57,7 +57,7 @@ def update_expense(
     db: Session, expense_id: int, new_expense_data: schemas.ExpenseUpdate
 ):
     expenses = db.query(models.Expense).filter(models.Expense.id == expense_id)
-    expenses.update(new_expense_data, synchronize_session=False)
+    expenses.update(new_expense_data.dict(), synchronize_session=False)
     db.commit()
     expense = expenses.first()
     logger.info("Expense updated")
