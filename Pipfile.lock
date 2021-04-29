@@ -40,11 +40,11 @@
         },
         "black": {
             "hashes": [
-                "sha256:20d326de75d13be6290925a95c94a9f368aca2f71cb7b753a938a5ae20f34a37",
-                "sha256:c9601dc863779db2fb1bf18b345bbfa2bb868463123cde6a7eff44b59e4ef739"
+                "sha256:bff7067d8bc25eb21dcfdbc8c72f2baafd9ec6de4663241a52fb904b304d391f",
+                "sha256:fc9bcf3b482b05c1f35f6a882c079dc01b9c7795827532f4cc43c0ec88067bbc"
             ],
             "index": "pypi",
-            "version": "==21.4b1"
+            "version": "==21.4b2"
         },
         "certifi": {
             "hashes": [
@@ -216,10 +216,10 @@
         },
         "httpcore": {
             "hashes": [
-                "sha256:1aab7711fa42a5df6043fdb62a3fb0f7a5899bccb53d0b0e500aa038acb0976c",
-                "sha256:d5602a0a9a5aa29937be6060acb2ac31461217d33e3e5e993038e51c841e0dec"
+                "sha256:04afd180f35cd576085d45901a39920fb0d5bd93f570525335e3e7e440231f44",
+                "sha256:91640a15870a8d0d2358e41021c698ff1a690cd095560aed4652c7d9da38d701"
             ],
-            "version": "==0.13.0"
+            "version": "==0.13.1"
         },
         "httptools": {
             "hashes": [
@@ -411,7 +411,7 @@
         "pyjwt": {
             "editable": true,
             "git": "https://github.com/jpadilla/pyjwt.git",
-            "ref": "fb86f9dffb371ee2adbc573edc35ded129ea3b36"
+            "ref": "79c23d7d9d32364be8f94680d8eda7135c3a15d5"
         },
         "pyparsing": {
             "hashes": [
@@ -653,11 +653,11 @@
         },
         "black": {
             "hashes": [
-                "sha256:20d326de75d13be6290925a95c94a9f368aca2f71cb7b753a938a5ae20f34a37",
-                "sha256:c9601dc863779db2fb1bf18b345bbfa2bb868463123cde6a7eff44b59e4ef739"
+                "sha256:bff7067d8bc25eb21dcfdbc8c72f2baafd9ec6de4663241a52fb904b304d391f",
+                "sha256:fc9bcf3b482b05c1f35f6a882c079dc01b9c7795827532f4cc43c0ec88067bbc"
             ],
             "index": "pypi",
-            "version": "==21.4b1"
+            "version": "==21.4b2"
         },
         "certifi": {
             "hashes": [
