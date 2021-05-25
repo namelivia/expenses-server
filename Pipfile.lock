@@ -18,10 +18,11 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:fb9a39a7c68e55490be962fb5f70463d384d340e6563d6e3911447778e3b4576"
+                "sha256:becb572c6701c90ca249f97fc1ae231468cc9516df367a350901eeb9310a8d43",
+                "sha256:dd0fd7109f82cd1d7ea64b26f287534a1ad1bc5deab79807926d5f3f5b3b517c"
             ],
             "index": "pypi",
-            "version": "==1.6.2"
+            "version": "==1.6.4"
         },
         "appdirs": {
             "hashes": [
@@ -785,10 +786,10 @@
         },
         "identify": {
             "hashes": [
-                "sha256:9c3ab58543c03bd794a1735e4552ef6dec49ec32053278130d525f0982447d47",
-                "sha256:bc1705694253763a3160b943316867792ec00ba7a0ee40b46e20aebaf4e0c46a"
+                "sha256:01ebbc7af37043806216c7550539210cde4f82451983eb8735a02b3b9d013e40",
+                "sha256:1560bb645b93d5c05c3535c72a4f4884133006423d02c692ac6862a45eb0d521"
             ],
-            "version": "==2.2.5"
+            "version": "==2.2.6"
         },
         "idna": {
             "hashes": [
@@ -1029,10 +1030,10 @@
         },
         "virtualenv": {
             "hashes": [
-                "sha256:307a555cf21e1550885c82120eccaf5acedf42978fd362d32ba8410f9593f543",
-                "sha256:72cf267afc04bf9c86ec932329b7e94db6a0331ae9847576daaa7ca3c86b29a4"
+                "sha256:14fdf849f80dbb29a4eb6caa9875d476ee2a5cf76a5f5415fa2f1606010ab467",
+                "sha256:2b0126166ea7c9c3661f5b8e06773d28f83322de7a3ff7d06f0aed18c9de6a76"
             ],
-            "version": "==20.4.6"
+            "version": "==20.4.7"
         }
     }
 }
