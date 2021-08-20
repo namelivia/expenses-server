@@ -292,11 +292,11 @@
         },
         "httpx": {
             "hashes": [
-                "sha256:979afafecb7d22a1d10340bafb403cf2cb75aff214426ff206521fc79d26408c",
-                "sha256:9f99c15d33642d38bce8405df088c1c4cfd940284b4290cacbfb02e64f4877c6"
+                "sha256:92ecd2c00c688b529eda11cedb15161eaf02dee9116712f621c70d9a40b2cdd0",
+                "sha256:9bd728a6c5ec0a9e243932a9983d57d3cc4a87bb4f554e1360fce407f78f9435"
             ],
             "index": "pypi",
-            "version": "==0.18.2"
+            "version": "==0.19.0"
         },
         "idna": {
             "hashes": [
