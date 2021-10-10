@@ -12,11 +12,10 @@ router = APIRouter(prefix="/expenses", dependencies=[Depends(get_db)])
 @router.get("", response_model=List[schemas.Expense])
 def expenses(
     db: Session = Depends(get_db),
-    skip: int = 0,
-    limit: int = 10,
+    page: int = 0,
     x_pomerium_jwt_assertion: Optional[str] = Header(None),
 ):
-    expenses = crud.get_expenses(db, x_pomerium_jwt_assertion, skip, limit)
+    expenses = crud.get_expenses(db, x_pomerium_jwt_assertion, page)
     return expenses
 
 
