@@ -258,11 +258,11 @@
         },
         "httpcore": {
             "hashes": [
-                "sha256:1c38c0a2dcd702045ccb452574389b20504313e13de570aa75c22ba5b5100f56",
-                "sha256:d59d3d437405f14253d9a5889026e1e8657b057399274f8769a08a95084351a1"
+                "sha256:47d7c8f755719d4a57be0b6e022897e9e963bf9ce4b15b9cc006a38a1cfa2932",
+                "sha256:ff8f8b9434ec4823f95a30596fbe78039913e706d3e598b0b8955b1e1828e093"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==0.14.1"
+            "version": "==0.14.2"
         },
         "httptools": {
             "hashes": [
@@ -296,11 +296,11 @@
         },
         "httpx": {
             "hashes": [
-                "sha256:3278982890a739d7bbe0f34cbc216fcde939bc1f54e1062db02deadae4f314d6",
-                "sha256:5ae1d9deb30fe074596551b3ab98f94dfd9d7efe3ecd2d08662a5c29f6fba0e4"
+                "sha256:02af20df486b78892a614a7ccd4e4e86a5409ec4981ab0e422c579a887acad83",
+                "sha256:208e5ef2ad4d105213463cfd541898ed9d11851b346473539a8425e644bb7c66"
             ],
             "index": "pypi",
-            "version": "==0.21.0"
+            "version": "==0.21.1"
         },
         "idna": {
             "hashes": [
@@ -525,7 +525,7 @@
         "pyjwt": {
             "editable": true,
             "git": "https://github.com/jpadilla/pyjwt.git",
-            "ref": "c4973c7dd602eac984877ceb0186ef5f233bdb8f"
+            "ref": "ca88b1a0d48580ede0dcc743172eb46c5e0f3a74"
         },
         "pyparsing": {
             "hashes": [
@@ -913,11 +913,11 @@
         },
         "filelock": {
             "hashes": [
-                "sha256:7afc856f74fa7006a289fd10fa840e1eebd8bbff6bffb69c26c54a0512ea8cf8",
-                "sha256:bb2a1c717df74c48a2d00ed625e5a66f8572a3a30baacb7657add1d7bac4097b"
+                "sha256:2e139a228bcf56dd8b2274a65174d005c4a6b68540ee0bdbb92c76f43f29f7e8",
+                "sha256:93d512b32a23baf4cac44ffd72ccf70732aeff7b8050fcaf6d3ec406d954baf4"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==3.3.2"
+            "version": "==3.4.0"
         },
         "identify": {
             "hashes": [
@@ -943,11 +943,11 @@
         },
         "jedi": {
             "hashes": [
-                "sha256:18456d83f65f400ab0c2d3319e48520420ef43b23a086fdc05dff34132f0fb93",
-                "sha256:92550a404bad8afed881a137ec9a461fed49eca661414be45059329614ed0707"
+                "sha256:637c9635fcf47945ceb91cd7f320234a7be540ded6f3e99a50cb6febdfd1ba8d",
+                "sha256:74137626a64a99c8eb6ae5832d99b3bdd7d29a3850fe2aa80a4126b2a7d949ab"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==0.18.0"
+            "version": "==0.18.1"
         },
         "mock": {
             "hashes": [
