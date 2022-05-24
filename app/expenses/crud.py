@@ -7,6 +7,7 @@ from . import models, schemas
 from app.notifications.notifications import Notifications
 from app.users.service import UserService
 from app.user_info.user_info import UserInfo
+from app.expenses.report import Report
 
 logger = logging.getLogger(__name__)
 
@@ -86,3 +87,7 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
     return [
         {"user": UserInfo.get(total[0])["name"], "total": total[1]} for total in totals
     ]
+
+
+def generate_report(db: Session):
+    return Report(content="This is the expenses report")
