@@ -75,11 +75,12 @@ def delete_expense(db: Session, expense: models.Expense):
     logger.info("Expense deleted")
 
 
-def get_total_during_month(db: Session, month: int):
+def get_total_by_category_during_month(db: Session, month: int):
     return (
-        db.query(func.sum(models.Expense.value))
+        db.query(models.Expense.category_id, func.sum(models.Expense.value))
         .filter(extract("month", models.Expense.date) == month)
-        .first()[0]
+        .group_by(models.Expense.category_id)
+        .all()
     )
 
 
@@ -99,5 +100,5 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
 
 def generate_report(db: Session):
     this_month = datetime.datetime.now().month
-    total_this_month = get_total_during_month(db, this_month)
-    return generate_expenses_report(total_this_month)
+    total_by_category_this_month = get_total_by_category_during_month(db, this_month)
+    return generate_expenses_report(total_by_category_this_month)

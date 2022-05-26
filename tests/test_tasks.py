@@ -14,7 +14,6 @@ from freezegun import freeze_time
 @freeze_time("2013-04-09")
 class TestApp:
     def _insert_test_expense(self, session, expense: dict = {}):
-        self._insert_test_category(session)
         data = {
             "name": "Test expense",
             "value": 200,
@@ -42,9 +41,14 @@ class TestApp:
 
     @patch("app.notifications.notifications.Notifications.send")
     def test_sending_expenses_report(self, m_send_notification, database_test_session):
+        self._insert_test_category(database_test_session)
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
+        self._insert_test_category(database_test_session)
+        self._insert_test_expense(database_test_session, {"category_id": 2})
         with freeze_time("2013-04-13"):
             Tasks.send_report(database_test_session)
-        m_send_notification.assert_called_with("Total spent this month 600")
+        m_send_notification.assert_called_with(
+            "600 spent on 1 | 200 spent on 2 | Total spent this month 800"
+        )
