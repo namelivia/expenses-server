@@ -1,13 +1,13 @@
 # TODO: Maybe the filename crud is not that good since this is not CRUD anymore
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, extract
 import logging
 import datetime
 from . import models, schemas
 from app.notifications.notifications import Notifications
 from app.users.service import UserService
 from app.user_info.user_info import UserInfo
-from app.expenses.report import Report
+from app.expenses.report import generate_expenses_report
 
 logger = logging.getLogger(__name__)
 
@@ -75,6 +75,14 @@ def delete_expense(db: Session, expense: models.Expense):
     logger.info("Expense deleted")
 
 
+def get_total_during_month(db: Session, month: int):
+    return (
+        db.query(func.sum(models.Expense.value))
+        .filter(extract("month", models.Expense.date) == month)
+        .first()[0]
+    )
+
+
 def get_totals(db: Session, x_pomerium_jwt_assertion):
     group = UserService.get_current_user_group(db, x_pomerium_jwt_assertion)
     users = UserService.get_all_users_from_group(db, group)
@@ -90,4 +98,6 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
 
 
 def generate_report(db: Session):
-    return Report(content="This is the expenses report")
+    this_month = datetime.datetime.now().month
+    total_this_month = get_total_during_month(db, this_month)
+    return generate_expenses_report(total_this_month)
