@@ -74,10 +74,11 @@ def delete_expense(db: Session, expense: models.Expense):
     logger.info("Expense deleted")
 
 
-def get_total_by_category_during_month(db: Session, month: int):
+def get_total_by_category_during_month(db: Session, month: int, year: int):
     return (
         db.query(models.Expense.category_id, func.sum(models.Expense.value))
         .filter(extract("month", models.Expense.date) == month)
+        .filter(extract("year", models.Expense.date) == year)
         .group_by(models.Expense.category_id)
         .all()
     )

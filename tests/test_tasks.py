@@ -45,10 +45,15 @@ class TestApp:
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
+        # Make sure expenses are filtered by month and year
+        self._insert_test_expense(
+            database_test_session,
+            {"date": datetime.datetime.now() - datetime.timedelta(days=365)},
+        )
         self._insert_test_category(database_test_session)
         self._insert_test_expense(database_test_session, {"category_id": 2})
         with freeze_time("2013-04-13"):
             Tasks.send_report(database_test_session)
         m_send_notification.assert_called_with(
-            "600 spent on Other category | 200 spent on Test category | Total spent this month 800"
+            "6.00 spent on Other category | 2.00 spent on Test category | Total spent this month 8.00"
         )
