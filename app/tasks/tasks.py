@@ -1,4 +1,4 @@
-from app.expenses import crud
+from app.reports.report import generate_expenses_report
 from sqlalchemy.orm import Session
 from app.notifications.notifications import Notifications
 import logging
@@ -13,7 +13,7 @@ class Tasks:
     @staticmethod
     def send_report(db: Session):
         logger.info("Generating expenses report")
-        report = crud.generate_report(db)
+        report = generate_expenses_report(db)
         logger.info("Sending expenses report")
         try:
             Notifications.send(report.content)

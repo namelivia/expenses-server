@@ -9,7 +9,6 @@ from app.expenses.models import Expense
 from app.users.models import UserData
 from app.categories.models import Category
 from app.expenses.schemas import Expense as ExpenseSchema
-from app.expenses.crud import generate_report
 import datetime
 from freezegun import freeze_time
 
