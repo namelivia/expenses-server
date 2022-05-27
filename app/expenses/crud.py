@@ -8,6 +8,7 @@ from app.notifications.notifications import Notifications
 from app.users.service import UserService
 from app.user_info.user_info import UserInfo
 from app.expenses.report import generate_expenses_report
+from app.categories.crud import get_categories
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +99,9 @@ def get_totals(db: Session, x_pomerium_jwt_assertion):
     ]
 
 
+# TODO: This should be somwhere else
 def generate_report(db: Session):
     this_month = datetime.datetime.now().month
     total_by_category_this_month = get_total_by_category_during_month(db, this_month)
-    return generate_expenses_report(total_by_category_this_month)
+    categories = get_categories(db)
+    return generate_expenses_report(total_by_category_this_month, categories)

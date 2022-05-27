@@ -41,7 +41,7 @@ class TestApp:
 
     @patch("app.notifications.notifications.Notifications.send")
     def test_sending_expenses_report(self, m_send_notification, database_test_session):
-        self._insert_test_category(database_test_session)
+        self._insert_test_category(database_test_session, {"name": "Other category"})
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
         self._insert_test_expense(database_test_session)
@@ -50,5 +50,5 @@ class TestApp:
         with freeze_time("2013-04-13"):
             Tasks.send_report(database_test_session)
         m_send_notification.assert_called_with(
-            "600 spent on 1 | 200 spent on 2 | Total spent this month 800"
+            "600 spent on Other category | 200 spent on Test category | Total spent this month 800"
         )
