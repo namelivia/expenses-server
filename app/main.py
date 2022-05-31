@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.expenses.api import router as expenses
 from app.users.api import router as users
 from app.categories.api import router as categories
+from app.reports.api import router as report
 import logging
 import sys
 
@@ -20,11 +21,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-[
-    app.include_router(router)
-    for router in [
-        expenses,
-        users,
-        categories,
-    ]
-]
+[app.include_router(router) for router in [expenses, users, categories, report]]

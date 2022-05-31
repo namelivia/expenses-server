@@ -307,3 +307,22 @@ class TestApp:
             "id": 1,
             "name": "Test category",
         }
+
+    def test_get_reports(self, client, database_test_session):
+        self._insert_test_category(database_test_session, {"name": "Other category"})
+        self._insert_test_expense(database_test_session)
+        self._insert_test_expense(database_test_session)
+        self._insert_test_expense(database_test_session)
+        # Make sure expenses are filtered by month and year
+        self._insert_test_expense(
+            database_test_session,
+            {"date": datetime.datetime.now() - datetime.timedelta(days=365)},
+        )
+        self._insert_test_category(database_test_session)
+        self._insert_test_expense(database_test_session, {"category_id": 2})
+        with freeze_time("2013-04-13"):
+            response = client.get("/reports")
+        assert response.status_code == 200
+        assert response.json() == {
+            "content": "6.00 spent on Other category | 2.00 spent on Test category | Total spent this month 8.00"
+        }
