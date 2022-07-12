@@ -680,11 +680,10 @@
         },
         "sqlalchemy-utils": {
             "hashes": [
-                "sha256:622235b1598f97300e4d08820ab024f5219c9a6309937a8b908093f487b4ba54",
-                "sha256:9e01d6d3fb52d3926fcd4ea4a13f3540701b751aced0316bff78264402c2ceb4"
+                "sha256:9f9afba607a40455cf703adfa9846584bf26168a0c5a60a70063b70d65051f4d"
             ],
             "index": "pypi",
-            "version": "==0.38.2"
+            "version": "==0.38.3"
         },
         "starlette": {
             "hashes": [
@@ -838,7 +837,7 @@
         },
         "coverage": {
             "extras": [
-                "toml"
+
             ],
             "hashes": [
                 "sha256:01c5615d13f3dd3aa8543afc069e5319cfa0c7d712f6e04b920431e5c564a749",
