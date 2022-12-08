@@ -54,6 +54,11 @@ class TestApp:
         self._insert_test_expense(database_test_session, {"category_id": 2})
         with freeze_time("2013-04-13"):
             Tasks.send_report(database_test_session)
-        m_send_notification.assert_called_with(
-            "6.00 spent on Other category | 2.00 spent on Test category | Total spent this month 8.00"
+        m_send_notification.assert_any_call(
+            "en",
+            "6.00 spent on Other category | 2.00 spent on Test category | Total spent this month 8.00",
+        )
+        m_send_notification.assert_any_call(
+            "es",
+            "6.00 gastado en Other category | 2.00 gastado en Test category | Total gastado este mes 8.00",
         )

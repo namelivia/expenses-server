@@ -9,12 +9,17 @@ from .test_base import (
 
 class TestServices:
     @patch("requests.post")
-    def test_sending_a_notification(self, m_post):
-        Notifications.send("Test message")
+    def test_sending_a_notification_in_spanish(self, m_post):
+        Notifications.send("es", "Prueba")
         m_post.assert_called_with(
             url="http://notifications-service:80",
-            json={"body": "Test message"},
+            json={"body": "Prueba"},
         )
+
+    @patch("requests.post")
+    def test_sending_a_notification_in_english(self, m_post):
+        Notifications.send("en", "Test")
+        m_post.assert_not_called()  # English notifications won't be sent yet, there is no endpoint
 
     @patch("app.users.service.UserInfo.get_current")
     def test_getting_current_user_group(self, m_get_user_info, database_test_session):

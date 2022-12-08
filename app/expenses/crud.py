@@ -46,7 +46,12 @@ def create_expense(
     logger.info("New expense created")
     try:
         Notifications.send(
-            f"{db_expense.user_name} spent {(db_expense.value/100):.2f} on {db_expense.name}"
+            "en",
+            f"{db_expense.user_name} spent {(db_expense.value/100):.2f} on {db_expense.name}",
+        )
+        Notifications.send(
+            "es",
+            f"{db_expense.user_name} ha gastado {(db_expense.value/100):.2f} en {db_expense.name}",
         )
     except Exception as err:
         logger.error(f"Notification could not be sent: {str(err)}")
@@ -62,7 +67,8 @@ def update_expense(
     expense = expenses.first()
     logger.info("Expense updated")
     try:
-        Notifications.send(f"The expense {expense.name} has been updated")
+        Notifications.send("en", f"The expense {expense.name} has been updated")
+        Notifications.send("es", f"El gasto {expense.name} ha sido actualizado")
     except Exception as err:
         logger.error(f"Notification could not be sent: {str(err)}")
     return expense
