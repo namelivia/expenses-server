@@ -24,7 +24,7 @@ sqlalchemy-utils = "*"
 gunicorn = "*"
 uvloop = "*"
 httptools = "*"
-httpx = "~=0.23.1"
+httpx = "~=0.23.2"
 pyjwt = {editable = true, ref = "master", git = "https://github.com/jpadilla/pyjwt.git"}
 cryptography = "*"
 fastapi-utils = "*"
