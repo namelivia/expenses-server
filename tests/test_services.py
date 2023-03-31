@@ -23,7 +23,7 @@ class TestServices:
 
     @patch("app.users.service.UserInfo.get_current")
     def test_getting_current_user_group(self, m_get_user_info, database_test_session):
-        db_user_data = UserData(group="Test Group", user_id="user")
+        db_user_data = UserData(group="Test Group", user_id="google/user")
         database_test_session.add(db_user_data)
         database_test_session.commit()
         m_get_user_info.return_value = {

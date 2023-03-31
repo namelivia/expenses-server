@@ -39,7 +39,7 @@ def get_totals(
 
 @router.get("/{expense_id}", response_model=schemas.Expense)
 def get_expense(
-    expense_id: int = Path(None, title="The ID of the expense to get", ge=1),
+    expense_id: int = Path(title="The ID of the expense to get", ge=1),
     db: Session = Depends(get_db),
 ):
     return _get_expense(db, expense_id)
@@ -58,14 +58,14 @@ def create_expense(
 def update_expense(
     new_expense_data: schemas.ExpenseUpdate,
     db: Session = Depends(get_db),
-    expense_id: int = Path(None, title="The ID for the expense to update", ge=1),
+    expense_id: int = Path(title="The ID for the expense to update", ge=1),
 ):
     return crud.update_expense(db, expense_id, new_expense_data)
 
 
 @router.delete("/{expense_id}")
 async def delete_expense(
-    expense_id: int = Path(None, title="The ID of the expense to remove", ge=1),
+    expense_id: int = Path(title="The ID of the expense to remove", ge=1),
     db: Session = Depends(get_db),
 ):
     crud.delete_expense(db, _get_expense(db, expense_id))
