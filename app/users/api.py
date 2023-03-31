@@ -31,7 +31,7 @@ async def get_current_user(
 ):
     try:
         user_info = UserInfo.get_current(x_pomerium_jwt_assertion)
-        user_id = f"google/{user_info[\"sub\"]}"
+        user_id = "google/" + user_info["sub"]
         user_data = crud.get_or_create_user_data(db, user_id)
         return {
             **user_info,
